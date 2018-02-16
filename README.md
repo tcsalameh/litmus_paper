@@ -237,6 +237,30 @@ Run tests using `rake`. The default task runs all the tests.
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
+## Docker
+
+We've provided a simple docker image that can be used to try out litmus_paper, run tests, or to assist in feature development.
+
+To run it, from the top of your copy of the litmus_paper repository:
+
+```
+docker build -t litmus_paper .
+# Run litmus_paper
+docker run -d -p 9293:9293 litmus_paper
+# Run litmus_paper with litmus-agent checks using 10 workers
+docker run -d -p 9292:9292 litmus_paper litmus-agent-check -s test:9292 -c /etc/litmus.conf -w 10
+```
+
+Then, you can `curl localhost:9293` (or port 9292 if you're running the agent checks) from your host machine to interact with the REST API.
+
+To run interactively and attach to the container:
+
+```
+docker run -it litmus_paper /bin/bash
+# litmus -p 9293 -d
+# curl localhost:9293
+```
+
 ## TODO
 
 1. Accept configuration in either YAML or ruby format.
